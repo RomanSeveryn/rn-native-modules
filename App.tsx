@@ -1,31 +1,29 @@
 import React, { useEffect } from 'react';
 import {
+  NativeModules,
   Platform,
   SafeAreaView,
   Text,
-  useColorScheme,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import TestModule from './CustomModel';
 
 function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   useEffect(() => {
     if (Platform.OS === 'android') {
-      TestModule.show();
+      NativeModules.OpenActivity.open();
     }
   }, []);
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView
+      style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
+    >
       <View>
         <Text>Hi</Text>
+        <TouchableOpacity onPress={() => NativeModules.OpenActivity.open()}>
+          <Text>Open Android Activity</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
